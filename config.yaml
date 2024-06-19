@@ -1,0 +1,67 @@
+TOPR: # TOPR: Two-stage Online Phase Reconstruction
+  root_dir: "/work/tamamori/topr/"
+  data_dir: "data/"
+  trainset_dir: "basic5000/" # you must download the dataset & specify its dirname
+  evalset_dir: "onoma300/"   # you must download the dataset & specify its dirname
+  resample_dir: "resample_16k/"
+  resample_trim_dir: "resample_16k_trim/"
+  split_dir: "split/"
+  label_dir: "label/"
+  feat_dir: "feat/"
+  model_dir: "model/"
+  demo_dir: "demo/"
+  score_dir: "score/"
+  fig_dir: "fig/"
+  ltfat_dir: "/work/tamamori/ltfat-main"
+
+preprocess:
+  resample_rate: 16000
+  n_jobs: 6
+  sec_per_split: 0.9  # in seconds (DO NOT EDIT!)
+  repo_url: "https://github.com/sarulab-speech/jsut-label/archive/refs/heads/master.zip"
+  repo_name: "jsut-label-master"
+
+feature:
+  sample_rate: 16000  # sampling frequency
+  win_length: 512     # analysis window length (frame length)
+  hop_length: 128     # hop length (frame shift length)
+  window: "hann"      # window type
+  n_fft: 512          # FFT length
+
+model:
+  n_lookahead: 0 # number of look-ahead frames; if positive, model will be offline.
+  n_lookback: 3  # number of look-back frames; must be positive.
+  kernel_size: 5 # for 1 FreqGatedConv & 2 residual connections
+  n_channels: 64 # number of conv channels except the first and last FreqConv
+  
+training:
+  n_epoch: 15
+  n_batch: 32
+  num_workers: 1
+  model_file: "model"
+  report_interval: 1
+  optim:
+    optimizer:
+      name: RAdam
+      params:  # add items according to optimizer
+        lr: 0.001  # learning rate
+        weight_decay: 0.0001
+        decoupled_weight_decay: False # True: enable AdamW style
+    lr_scheduler:
+      name: CosineAnnealingWithWarmupLR
+      cosine_params:
+        warmup_epochs: 5
+        max_epochs: 15
+        warmup_start_lr: 0.000001
+        eta_min: 0.0005
+  use_scheduler: True  # True: enable scheduler
+  use_grad_clip: True  # True enable gradient clipping
+  grad_max_norm: 10  # clipping value
+
+demo:
+  pesq_band: "wb"  # "wb": wideband or "nb": narrowband
+  stoi_extended: True  # True: extended STOI
+  weighted_rpu: False  # True: weighted RPU
+  weight_power_rpu: 5.0  # power of weight
+  weight_power: 2.5  # power of weight
+  weight_gamma: 500.0  # scaler to weight
