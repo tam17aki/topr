@@ -61,7 +61,7 @@ Mainly, we will use the following scripts:
 
 (option) 7. Run `plot_boxplot.py`. It plots boxplot of objective scores.
 
-(option) 8. Run `evaluate_scores_rpu.py` and `plot_boxplot.py` if you want to compare the performance of online/offline version with RPU.
+(option) 8. Run `evaluate_scores_rpu.py` and `plot_boxplot_rpu.py` if you want to compare the performance of online/offline version with RPU.
 
 
 ## References
