@@ -152,12 +152,11 @@ def get_lr_scheduler(cfg: DictConfig, optimizer):
 class CustomLoss(nn.Module):
     """Custom loss."""
 
-    def __init__(self, cfg, model, device):
+    def __init__(self, cfg, model):
         """Initialize class."""
         super().__init__()
         self.cfg = cfg
         self.model = model
-        self.device = device
 
     def _tpd2bpd(self, tpd):
         """Modify TPD to BPD.
@@ -222,8 +221,8 @@ class CustomLoss(nn.Module):
             loss: cosine loss of BPD or FPD.
         """
         logmag_batch, phase_batch = batch
-        logmag_batch = logmag_batch.to(self.device).float()  # [B*T, L+1, K]
-        phase_batch = phase_batch.to(self.device).float()  # [B, T, K]
+        logmag_batch = logmag_batch.cuda().float()  # [B*T, L+1, K]
+        phase_batch = phase_batch.cuda().float()  # [B, T, K]
         predicted = self.model(logmag_batch)  # [B*T, 1, K]
         predicted = predicted.squeeze()  # [B*T, K]
         predicted = predicted.reshape(
@@ -236,7 +235,7 @@ class CustomLoss(nn.Module):
         return loss
 
 
-def get_loss(cfg, model, device):
+def get_loss(cfg, model):
     """Instantiate customized loss."""
-    custom_loss = CustomLoss(cfg, model, device)
+    custom_loss = CustomLoss(cfg, model)
     return custom_loss

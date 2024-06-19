@@ -43,7 +43,7 @@ def get_training_modules(cfg: DictConfig, device: torch.device):
     """Instantiate modules for training."""
     dataloader = get_dataloader(cfg)
     model = get_model(cfg, device)
-    loss_func = get_loss(cfg, model, device)
+    loss_func = get_loss(cfg, model)
     optimizer = get_optimizer(cfg, model)
     lr_scheduler = None
     if cfg.training.use_scheduler:
