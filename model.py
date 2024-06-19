@@ -165,5 +165,5 @@ def get_model(cfg):
         cfg (DictConfig): configuration in YAML format.
         device: device info.
     """
-    model = TOPRNet(cfg).cuda()
+    model = TOPRNet(cfg)
     return model

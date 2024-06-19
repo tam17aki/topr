@@ -40,7 +40,7 @@ from model import get_model
 def get_training_modules(cfg: DictConfig):
     """Instantiate modules for training."""
     dataloader = get_dataloader(cfg)
-    model = get_model(cfg)
+    model = get_model(cfg).cuda()
     loss_func = get_loss(cfg, model)
     optimizer = get_optimizer(cfg, model)
     lr_scheduler = None
