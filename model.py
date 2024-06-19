@@ -158,12 +158,12 @@ class TOPRNet(nn.Module):
         return outputs
 
 
-def get_model(cfg, device: torch.device):
+def get_model(cfg):
     """Instantiate models.
 
     Args:
         cfg (DictConfig): configuration in YAML format.
         device: device info.
     """
-    model = TOPRNet(cfg).to(device)
+    model = TOPRNet(cfg).cuda()
     return model
