@@ -36,8 +36,6 @@ from dataset import get_dataloader
 from factory import get_loss, get_lr_scheduler, get_optimizer
 from model import get_model
 
-torch.backends.cudnn.benchmark = True
-
 
 def get_training_modules(cfg: DictConfig, device: torch.device):
     """Instantiate modules for training."""
