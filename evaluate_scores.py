@@ -42,7 +42,7 @@ from torch.multiprocessing import set_start_method
 from model import get_model
 
 
-def load_checkpoint(cfg: DictConfig, device):
+def load_checkpoint(cfg: DictConfig):
     """Load checkpoint.
 
     Args:
@@ -54,12 +54,12 @@ def load_checkpoint(cfg: DictConfig, device):
         model_fpd (nn.Module): DNNs to estimate FPD.
     """
     model_dir = os.path.join(cfg.TOPR.root_dir, cfg.TOPR.model_dir)
-    model_bpd = get_model(cfg, device)
+    model_bpd = get_model(cfg)
     model_file = os.path.join(model_dir, cfg.training.model_file + ".bpd.pth")
     checkpoint = torch.load(model_file)
     model_bpd.load_state_dict(checkpoint)
 
-    model_fpd = get_model(cfg, device)
+    model_fpd = get_model(cfg)
     model_file = os.path.join(model_dir, cfg.training.model_file + ".fpd.pth")
     checkpoint = torch.load(model_file)
     model_fpd.load_state_dict(checkpoint)
@@ -431,8 +431,9 @@ def main(cfg: DictConfig):
     os.makedirs(score_dir, exist_ok=True)
 
     # load DNN parameters
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    model_bpd, model_fpd = load_checkpoint(cfg, device)
+    model_bpd, model_fpd = load_checkpoint(cfg)
+    model_bpd.cuda()
+    model_fpd.cuda()
     model_bpd.eval()
     model_fpd.eval()
 
