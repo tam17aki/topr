@@ -66,7 +66,7 @@ def collate_fn_rpu(batch, cfg):
         cfg (DictConfig): configuration in YAML format.
 
     Returns:
-        tuple: Batch of inputs, targets, and lengths.
+        tuple: a batch of inputs and targets.
     """
     batch_feats = {"logmag": None, "phase": None}
     for j, feat in enumerate(batch_feats.keys()):
