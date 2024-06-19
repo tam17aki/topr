@@ -37,10 +37,10 @@ from factory import get_loss, get_lr_scheduler, get_optimizer
 from model import get_model
 
 
-def get_training_modules(cfg: DictConfig, device: torch.device):
+def get_training_modules(cfg: DictConfig):
     """Instantiate modules for training."""
     dataloader = get_dataloader(cfg)
-    model = get_model(cfg, device)
+    model = get_model(cfg)
     loss_func = get_loss(cfg, model)
     optimizer = get_optimizer(cfg, model)
     lr_scheduler = None
@@ -94,13 +94,12 @@ def save_checkpoint(cfg: DictConfig, modules, mode):
 def main(cfg: DictConfig):
     """Perform model training."""
     print(OmegaConf.to_yaml(cfg), flush=True)  # dump configuration
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-    modules = get_training_modules(cfg, device)
+    modules = get_training_modules(cfg)
     training_loop(cfg, modules, "bpd")
     save_checkpoint(cfg, modules, "bpd")
 
-    modules = get_training_modules(cfg, device)
+    modules = get_training_modules(cfg)
     training_loop(cfg, modules, "fpd")
     save_checkpoint(cfg, modules, "fpd")
 
