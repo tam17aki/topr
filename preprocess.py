@@ -161,7 +161,7 @@ def split_utterance(cfg):
     )
     os.makedirs(out_dir, exist_ok=True)
     for wav_name in prg(
-        wav_list, prefix="Split utterances: ", suffix=" ", redirect_stdout=False
+        wav_list, prefix="Splitting utterances: ", suffix=" ", redirect_stdout=False
     ):
         audio = AudioSegment.from_wav(wav_name)
         duration = math.floor(audio.duration_seconds)
@@ -254,7 +254,7 @@ def extract_feature(cfg, is_train=True):
         ]
         for future in prg(
             futures,
-            prefix="Extract acoustic features: ",
+            prefix="Extracting acoustic features: ",
             suffix=" ",
             redirect_stdout=False,
         ):
