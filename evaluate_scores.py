@@ -47,7 +47,6 @@ def load_checkpoint(cfg: DictConfig):
 
     Args:
         cfg (DictConfig): configuration.
-        device: device info.
 
     Returns:
         model_bpd (nn.Module): DNNs to estimate BPD.
@@ -294,11 +293,10 @@ def reconst_phase(cfg, model_tuple, logmag, magnitude):
     Returns:
         phase (ndarray): reconstruced phase. [T, K]
     """
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     logmag = np.pad(
         logmag, ((cfg.model.n_lookback, cfg.model.n_lookahead), (0, 0)), "constant"
     )
-    logmag = torch.from_numpy(logmag).float().unsqueeze(0).to(device)  # [1, T+L+1, K]
+    logmag = torch.from_numpy(logmag).float().unsqueeze(0).cuda()  # [1, T+L+1, K]
     n_frame, n_fbin = magnitude.shape
     n_lookback = cfg.model.n_lookback
     n_lookahead = cfg.model.n_lookahead
