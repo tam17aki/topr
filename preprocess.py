@@ -90,8 +90,9 @@ def resample_wav(cfg, sample_rate=44100, is_train=True):
     wav_list.sort()
 
     os.makedirs(resample_dir, exist_ok=True)
-    print("Resampling wave files:")
-    for wav_name in prg(wav_list):
+    for wav_name in prg(
+        wav_list, prefix="Resampling wave files: ", suffix=" ", redirect_stdout=False
+    ):
         wav_path = os.path.join(wav_dir, wav_name)
         wav, _ = librosa.load(wav_path, sr=sample_rate)
         down_sampled = librosa.resample(
