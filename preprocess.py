@@ -121,8 +121,9 @@ def trim_silence(cfg, is_train=True):
     )
     os.makedirs(trim_dir, exist_ok=True)
 
-    print("Trimming silence:")
-    for lab_file in prg(label_list):
+    for lab_file in prg(
+        label_list, prefix="Trimming silence: ", suffix=" ", redirect_stdout=False
+    ):
         with open(lab_file, mode="r", encoding="utf-8") as file_handler:
             lines = file_handler.read().splitlines()
             begin_info = lines[0].split()[1]  # start time of the first segment
@@ -158,8 +159,9 @@ def split_utterance(cfg):
         cfg.TOPR.root_dir, cfg.TOPR.data_dir, cfg.TOPR.trainset_dir, cfg.TOPR.split_dir
     )
     os.makedirs(out_dir, exist_ok=True)
-    print("Split utterances:")
-    for wav_name in prg(wav_list):
+    for wav_name in prg(
+        wav_list, prefix="Split utterances: ", suffix=" ", redirect_stdout=False
+    ):
         audio = AudioSegment.from_wav(wav_name)
         duration = math.floor(audio.duration_seconds)
         for i in range(0, int(duration // sec_per_split)):
@@ -244,13 +246,17 @@ def extract_feature(cfg, is_train=True):
     )
     os.makedirs(feat_dir, exist_ok=True)
 
-    print("Extract acoustic features.")
     with ProcessPoolExecutor(cfg.preprocess.n_jobs) as executor:
         futures = [
             executor.submit(_extract_feature, cfg, utt, feat_dir, is_train)
             for utt in utt_list
         ]
-        for future in prg(futures):
+        for future in prg(
+            futures,
+            prefix="Extract acoustic features: ",
+            suffix=" ",
+            redirect_stdout=False,
+        ):
             future.result()  # return None
 
 
