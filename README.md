@@ -47,7 +47,7 @@ Mainly, we will use the following scripts:
 
 ## Recipes
 
-1. Prepare the two datasets form the JSUT corpus. Put those in /root_dir/trainset_dir and /root_dir/evalset_dir/, respectively.
+1. Prepare the two datasets form the JSUT corpus. Put wave files in /root_dir/trainset_dir/orig and /root_dir/evalset_dir/orig, respectively.
 
 2. Modify `config.yaml` according to your environment. It contains settings for experimental conditions. For immediate use, you can edit mainly the directory paths according to your environment.
 
