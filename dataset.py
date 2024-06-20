@@ -58,7 +58,7 @@ class TOPRDataset(Dataset):
         return len(self.logmag_paths)
 
 
-def collate_fn_rpu(batch, cfg):
+def collate_fn_topr(batch, cfg):
     """Collate function for TOPR.
 
     Args:
@@ -122,7 +122,7 @@ def get_dataloader(cfg):
     data_loaders = DataLoader(
         TOPRDataset(feat_paths),
         batch_size=cfg.training.n_batch,
-        collate_fn=functools.partial(collate_fn_rpu, cfg=cfg),
+        collate_fn=functools.partial(collate_fn_topr, cfg=cfg),
         pin_memory=True,
         num_workers=cfg.training.num_workers,
         shuffle=True,
