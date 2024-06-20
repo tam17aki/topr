@@ -132,8 +132,8 @@ class TOPRNet(nn.Module):
     def __init__(self, config):
         """Initialize class."""
         super().__init__()
-        n_lookback = config.model.n_lookback
         n_lookahead = config.model.n_lookahead
+        n_lookback = config.model.n_lookback
         n_channels = config.model.n_channels
         kernel_size = config.model.kernel_size
         self.net = nn.Sequential(
