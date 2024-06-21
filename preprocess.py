@@ -182,7 +182,6 @@ def _extract_feature(cfg, utt_id, feat_dir, is_train):
         cfg (DictConfig): configuration in YAML format.
         utt_id (str): basename for audio.
         feat_dir (str): directory name for saving features.
-        scaler (StandardScaler): standard scaler from scikit-learn.
         is_train (Bool): handling training dataset or test dataset.
     """
     if is_train is True:
