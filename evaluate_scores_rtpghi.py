@@ -171,7 +171,9 @@ def reconst_waveform(cfg, wav_list):
     Returns:
         None.
     """
-    for wav_path in prg(wav_list):
+    for wav_path in prg(
+        wav_list, prefix="Reconstruct waveform: ", suffix=" ", redirect_stdout=False
+    ):
         audio, fs = sf.read(wav_path)
         stfft = signal.ShortTimeFFT(
             win=signal.get_window(cfg.feature.window, cfg.feature.win_length),
@@ -211,7 +213,9 @@ def compute_obj_scores(cfg, wav_list):
         score_list (dict): dictionary of objective score lists.
     """
     score_dict = {"pesq": [], "stoi": [], "lsc": []}
-    for wav_path in prg(wav_list):
+    for wav_path in prg(
+        wav_list, prefix="Compute objective scores: ", suffix=" ", redirect_stdout=False
+    ):
         score_dict["pesq"].append(compute_pesq(cfg, os.path.basename(wav_path)))
         score_dict["stoi"].append(compute_stoi(cfg, os.path.basename(wav_path)))
         score_dict["lsc"].append(compute_lsc(cfg, os.path.basename(wav_path)))
