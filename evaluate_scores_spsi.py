@@ -247,20 +247,22 @@ def main(cfg: DictConfig):
     os.makedirs(wav_dir, exist_ok=True)
     score_dir = os.path.join(cfg.TOPR.root_dir, cfg.TOPR.score_dir)
     os.makedirs(score_dir, exist_ok=True)
+    wav_list = glob.glob(
+        os.path.join(
+            cfg.TOPR.root_dir,
+            cfg.TOPR.data_dir,
+            cfg.TOPR.evalset_dir,
+            cfg.TOPR.resample_dir,
+        )
+        + "/*.wav"
+    )
+    wav_list.sort()
 
     # reconstruct phase and waveform
-    eval_wav_dir = os.path.join(
-        cfg.TOPR.root_dir,
-        cfg.TOPR.data_dir,
-        cfg.TOPR.evalset_dir,
-        cfg.TOPR.resample_dir,
-    )
-    eval_wav_list = glob.glob(eval_wav_dir + "/*.wav")
-    eval_wav_list.sort()
-    reconst_waveform(cfg, eval_wav_list)
+    reconst_waveform(cfg, wav_list)
 
     # compute objective scores
-    score_dict = compute_obj_scores(cfg, eval_wav_list)
+    score_dict = compute_obj_scores(cfg, wav_list)
 
     # aggregate objective scores
     aggregate_scores(cfg, score_dict, score_dir)
