@@ -174,7 +174,7 @@ def reconst_waveform(cfg, wav_list):
     for wav_path in prg(
         wav_list, prefix="Reconstruct waveform: ", suffix=" ", redirect_stdout=False
     ):
-        audio, fs = sf.read(wav_path)
+        audio, _ = sf.read(wav_path)
         stfft = signal.ShortTimeFFT(
             win=signal.get_window(cfg.feature.window, cfg.feature.win_length),
             hop=cfg.feature.hop_length,
