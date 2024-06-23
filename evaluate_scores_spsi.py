@@ -171,7 +171,7 @@ def reconst_waveform(cfg, wav_list):
     for wav_path in prg(
         wav_list, prefix="Reconstruct waveform: ", suffix=" ", redirect_stdout=False
     ):
-        audio, fs = sf.read(wav_path)
+        audio, _ = sf.read(wav_path)
         stfft = signal.ShortTimeFFT(
             win=signal.get_window(cfg.feature.window, cfg.feature.win_length),
             hop=cfg.feature.hop_length,
@@ -207,7 +207,7 @@ def compute_obj_scores(cfg, wav_list):
     return score_dict
 
 
-def aggregate_scores(cfg, score_dict, score_dir):
+def aggregate_scores(score_dict, score_dir):
     """Aggregate objective evaluation scores.
 
     Args:
@@ -265,7 +265,7 @@ def main(cfg: DictConfig):
     score_dict = compute_obj_scores(cfg, wav_list)
 
     # aggregate objective scores
-    aggregate_scores(cfg, score_dict, score_dir)
+    aggregate_scores(score_dict, score_dir)
 
 
 if __name__ == "__main__":
