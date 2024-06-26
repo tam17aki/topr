@@ -90,7 +90,7 @@ def compute_pesq(cfg, basename):
         eval_wav = eval_wav[: len(reference)]
     else:
         reference = reference[: len(eval_wav)]
-    return pesq(rate, reference, eval_wav, cfg.demo.pesq_band)
+    return pesq(rate, reference, eval_wav)
 
 
 def compute_stoi(cfg, basename):

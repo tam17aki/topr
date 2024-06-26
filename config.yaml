@@ -59,7 +59,6 @@ training:
   grad_max_norm: 10  # clipping value
 
 demo:
-  pesq_band: "wb"  # "wb": wideband or "nb": narrowband
   stoi_extended: True  # True: extended STOI
   weighted_rpu: False  # True: weighted RPU
   weight_power_rpu: 5.0  # power of weight
