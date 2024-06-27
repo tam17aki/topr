@@ -211,7 +211,6 @@ def aggregate_scores(score_dict, score_dir):
     """Aggregate objective evaluation scores.
 
     Args:
-        cfg (DictConfig): configuration.
         score_dict (dict): dictionary of objective score lists.
         score_dir (str): dictionary name of objective score files.
 
