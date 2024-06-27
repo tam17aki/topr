@@ -212,6 +212,7 @@ def compute_1st_stage(cfg, model_tuple, logmag):
     """Estimate TPD and FPD from log-magnitude spectra.
 
     Args:
+        cfg (DictConfig): configuration.
         model_tuple (tuple): tuple of DNN params (nn.Module).
         logmag (ndarray): log magnitude spectrum. [1, L, K]
 
