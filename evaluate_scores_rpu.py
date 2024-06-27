@@ -211,6 +211,7 @@ def bpd2tpd(bpd, win_len, hop_len, n_frames):
         bpd (ndarray): backward BPD. [K]
         win_len (int): length of analysis window.
         hop_len (int): length of window shift.
+        n_frames (int): number of frames.
 
     Returns:
         tpd (ndarray): backward TPD. [K]
